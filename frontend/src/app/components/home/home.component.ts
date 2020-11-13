@@ -2,13 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html'
+    selector: 'app-home',
+    templateUrl: './home.component.html'
 })
-export class AppComponent implements OnInit {
 
-    // todo validators
-    // todo check strange error when it starts
+export class HomeComponent implements OnInit {
+
     // todo routing
     x: string;
     y: string;
