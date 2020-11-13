@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputTextModule} from 'primeng/inputtext';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 
 @NgModule({
@@ -15,7 +15,8 @@ import {ButtonModule} from 'primeng/button';
         RadioButtonModule,
         InputTextModule,
         FormsModule,
-        ButtonModule
+        ButtonModule,
+        ReactiveFormsModule
     ],
     providers: [],
     bootstrap: [AppComponent]
