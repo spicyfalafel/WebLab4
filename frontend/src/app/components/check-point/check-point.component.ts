@@ -2,11 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html'
+    selector: 'app-check-point',
+    templateUrl: './check-point.component.html'
 })
-
-export class HomeComponent implements OnInit {
+export class CheckPointComponent implements OnInit {
 
     x: string;
     y: string;
@@ -57,3 +56,4 @@ export class HomeComponent implements OnInit {
 
     }
 }
+
