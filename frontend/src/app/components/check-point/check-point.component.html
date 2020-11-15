@@ -50,6 +50,10 @@
                     <p-radioButton class="m-2" name="rValue" formControlName="rValue" label="5"
                                    value="5" [(ngModel)]="r" (click)="onRRadioClick()"></p-radioButton>
                 </div>
+                <div class="p-message-error text-danger h6"
+                     [style.display]="isRSelected || r!==undefined ? 'none' : 'block'">
+                    Select R value before click on the plot
+                </div>
 
                 <div class="control-buttons m-2">
                     <button pButton label="Sumbit" class="p-button-help text-light m-2"

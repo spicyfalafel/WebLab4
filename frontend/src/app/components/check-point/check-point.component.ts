@@ -17,6 +17,7 @@ export class CheckPointComponent implements OnInit, AfterViewInit {
     y: string;
     r: string;
     dataForm: FormGroup;
+    isRSelected: boolean = true;
 
     constructor(private formBuilder: FormBuilder,
                 private pointsService: PointsService,
@@ -63,12 +64,17 @@ export class CheckPointComponent implements OnInit, AfterViewInit {
         this.drawAllPoints();
     }
 
+    checkRSelected(): boolean {
+        this.isRSelected = this.r !== undefined;
+        return this.isRSelected;
+    }
+
     onPlotClick(event: MouseEvent): void {
         const offset = this.plot.nativeElement.getBoundingClientRect();
         const x = event.pageX - offset.left;
         const y = event.pageY - offset.top;
 
-        if (this.r !== undefined) {
+        if (this.checkRSelected()) {
             const rValue = this.drawService.getRValue(this.r);
             const xValue = this.drawService.fromSvgToRX(x, rValue);
             const yValue = this.drawService.fromSvgToRY(y, rValue);

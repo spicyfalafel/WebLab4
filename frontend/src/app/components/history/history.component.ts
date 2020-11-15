@@ -17,7 +17,8 @@ export class HistoryComponent implements OnInit {
         {field: 'x', header: 'X'},
         {field: 'y', header: 'Y'},
         {field: 'r', header: 'R'},
-        {field: 'result', header: 'Result'}
+        {field: 'result', header: 'Result'},
+        {field: 'queryTime', header: 'Current time'}
     ];
 
     constructor(private pointsService: PointsService) {
