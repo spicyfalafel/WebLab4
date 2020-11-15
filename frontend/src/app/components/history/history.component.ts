@@ -1,12 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {PointsService} from '../../services/points.service';
 import {Point} from '../../models/Point';
+import {Table} from 'primeng/table';
 
 @Component({
     selector: 'app-history',
     templateUrl: './history.component.html'
 })
 export class HistoryComponent implements OnInit {
+
+    @ViewChild('dataTable', {static: false})
+    dataTable: Table;
 
     points: Point[];
     columns: any[] = [
