@@ -26,7 +26,7 @@ export class DrawService {
         points.forEach(point => this.renderer.removeChild(plot.nativeElement, point));
     }
 
-    private getRValue(rFromCheckComponent: string): number {
+    getRValue(rFromCheckComponent: string): number {
         let rValue = parseFloat(rFromCheckComponent);
         // fixme if after sending point r will reset
         if (isNaN(rValue)) {
@@ -43,11 +43,11 @@ export class DrawService {
         return this.CANVAS_HEIGHT / 2 - y / r * this.CANVAS_R_VALUE;
     }
 
-    private fromSvgToRX(x: number, r: number): number {
+    fromSvgToRX(x: number, r: number): number {
         return r * (x - this.CANVAS_WIDTH / 2) / this.CANVAS_R_VALUE;
     }
 
-    private fromSvgToRY(y: number, r: number): number {
+    fromSvgToRY(y: number, r: number): number {
         return r * (this.CANVAS_HEIGHT / 2 - y) / this.CANVAS_R_VALUE;
     }
 

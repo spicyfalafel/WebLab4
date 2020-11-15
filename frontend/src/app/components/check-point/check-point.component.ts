@@ -54,11 +54,27 @@ export class CheckPointComponent implements OnInit, AfterViewInit {
         console.log('x = ' + this.x);
         console.log('y = ' + this.y);
         console.log('r = ' + this.r);
+
+        // send here
     }
 
     onRRadioClick(): void {
         this.drawService.clearPlot(this.plot);
         this.drawAllPoints();
+    }
+
+    onPlotClick(event: MouseEvent): void {
+        const offset = this.plot.nativeElement.getBoundingClientRect();
+        const x = event.pageX - offset.left;
+        const y = event.pageY - offset.top;
+
+        if (this.r !== undefined) {
+            const rValue = this.drawService.getRValue(this.r);
+            const xValue = this.drawService.fromSvgToRX(x, rValue);
+            const yValue = this.drawService.fromSvgToRY(y, rValue);
+
+            // send here
+        }
     }
 
     onClearFormClick(): void {
