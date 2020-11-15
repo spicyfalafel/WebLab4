@@ -1,18 +1,26 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {PointsService} from '../../services/points.service';
+import {DrawService} from '../../services/draw.service';
+import {Point} from '../../models/Point';
 
 @Component({
     selector: 'app-check-point',
     templateUrl: './check-point.component.html'
 })
-export class CheckPointComponent implements OnInit {
+export class CheckPointComponent implements OnInit, AfterViewInit {
+
+    @ViewChild('plot', {static: false})
+    plot: ElementRef;
 
     x: string;
     y: string;
     r: string;
     dataForm: FormGroup;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor(private formBuilder: FormBuilder,
+                private pointsService: PointsService,
+                private drawService: DrawService) {
     }
 
     ngOnInit(): void {
@@ -48,12 +56,28 @@ export class CheckPointComponent implements OnInit {
         console.log('r = ' + this.r);
     }
 
+    onRRadioClick(): void {
+        this.drawService.clearPlot(this.plot);
+        this.drawAllPoints();
+    }
+
     onClearFormClick(): void {
 
     }
 
     onClearTableClick(): void {
 
+    }
+
+    ngAfterViewInit(): void {
+        this.drawAllPoints();
+    }
+
+    drawAllPoints(): void {
+        this.pointsService
+            .getAllPoints()
+            .subscribe((data: Point[]) => data.forEach(point =>
+                this.drawService.drawPoint(point, this.plot, this.r)));
     }
 }
 
