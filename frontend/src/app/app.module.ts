@@ -9,13 +9,17 @@ import {TableModule} from 'primeng/table';
 import {AboutComponent} from './components/about/about.component';
 import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './components/home/home.component';
-import { HistoryComponent } from './components/history/history.component';
+import {HistoryComponent} from './components/history/history.component';
 import {HttpClientModule} from '@angular/common/http';
-import { CheckPointComponent } from './components/check-point/check-point.component';
+import {CheckPointComponent} from './components/check-point/check-point.component';
+import {LoginComponent} from './components/login/login.component';
+import {RegisterComponent} from './components/register/register.component';
 
 const appRoutes: Routes = [
     {path: '', component: HomeComponent},
-    {path: '**', component: HomeComponent}
+    {path: 'login', component: LoginComponent},
+    {path: 'register', component: RegisterComponent},
+    {path: '**', component: LoginComponent}
 ];
 
 @NgModule({
@@ -24,7 +28,9 @@ const appRoutes: Routes = [
         AboutComponent,
         HomeComponent,
         HistoryComponent,
-        CheckPointComponent
+        CheckPointComponent,
+        LoginComponent,
+        RegisterComponent
     ],
     imports: [
         RouterModule.forRoot(appRoutes),

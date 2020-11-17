@@ -33,7 +33,8 @@
                     </span>
                     <div class="p-message-error text-danger h6" *ngIf="fieldErrors('yValue')">
                         <span *ngIf="fieldErrors('yValue').required">Y is required</span>
-                        <span *ngIf="fieldErrors('yValue').yOutOfBounds">Y must be number in [-3..3]</span>
+                        <span *ngIf="fieldErrors('yValue').pattern">Y must be number...</span>
+                        <span *ngIf="fieldErrors('yValue').max || fieldErrors('yValue').min">Y must be number in [-3..3]</span>
                     </div>
                 </div>
 

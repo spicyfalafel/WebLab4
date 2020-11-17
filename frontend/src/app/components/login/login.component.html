@@ -1,0 +1,37 @@
+<div class="container text-center">
+    <div style="margin: 15% 0 2%" class="h4">Sign in</div>
+    <div class="form border border-light rounded p-3 w-50" style="margin: 0 auto; background: darkslategrey">
+        <form class="data-form" [formGroup]="loginForm">
+            <div class="m-4 p-fluid">
+                <span class="p-float-label m-2">
+                    <input id="username" type="text" pInputText name="username" maxlength="20"
+                           formControlName="username" [(ngModel)]="userToAuth.username">
+                    <label for="username">Username</label>
+                </span>
+                <div class="p-message-error text-danger h6" *ngIf="fieldErrors('username')">
+                    <span *ngIf="fieldErrors('username').required">Username is required</span>
+                    <span *ngIf="fieldErrors('username').minlength || fieldErrors('username').maxlength">
+                        Length of username must be from 4 to 20
+                    </span>
+                </div>
+            </div>
+
+            <div class="m-4 p-fluid">
+                <span class="p-float-label m-2">
+                    <input id="password" type="password" pInputText name="password" maxlength="20"
+                           formControlName="password" [(ngModel)]="userToAuth.password">
+                    <label for="password">Password</label>
+                </span>
+                <div class="p-message-error text-danger h6" *ngIf="fieldErrors('password')">
+                    <span *ngIf="fieldErrors('password').required">Password is required</span>
+                    <span *ngIf="fieldErrors('password').minlength || fieldErrors('password').maxlength">
+                        Length of password must be from 4 to 20
+                    </span>
+                </div>
+            </div>
+
+            <button pButton label="Sign in" [disabled]="hasFormErrors()" (click)="onSingInClick()"
+                    class="p-button-help font-weight-bold text-dark m-2 w-50"></button>
+        </form>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 import {ElementRef, Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {Point} from '../models/Point';
+import {CheckResultService} from './check-result.service';
 
 @Injectable({providedIn: 'root'})
 export class DrawService {
@@ -11,14 +12,16 @@ export class DrawService {
 
     private renderer: Renderer2;
 
-    constructor(rendererFactory: RendererFactory2) {
+    constructor(rendererFactory: RendererFactory2, private checkResultService: CheckResultService) {
         this.renderer = rendererFactory.createRenderer(null, null);
     }
 
     drawPoint(point: Point, plot: ElementRef, rFromCheckComponent: string): void {
+        const rValue = this.getRValue(rFromCheckComponent);
+        const color: string = this.getColorByResult(this.checkResultService.getResult(point.x, point.y, rValue));
         plot.nativeElement.innerHTML +=
-            `<circle class="point" r="4" cx="${this.fromTableToSvgX(point.x, this.getRValue(rFromCheckComponent))}" 
-             cy="${this.fromTableToSvgY(point.y, this.getRValue(rFromCheckComponent))}" fill="${this.getColorByResult(point.result)}"></circle>`;
+            `<circle class="point" r="4" cx="${this.fromTableToSvgX(point.x, rValue)}" 
+             cy="${this.fromTableToSvgY(point.y, rValue)}" fill="${color}"></circle>`;
     }
 
     clearPlot(plot: ElementRef) {

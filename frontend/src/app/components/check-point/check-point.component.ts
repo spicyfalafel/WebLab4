@@ -27,19 +27,10 @@ export class CheckPointComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
         this.dataForm = this.formBuilder.group({
             xValue: ['', [Validators.required]],
-            yValue: ['', [Validators.required, this.yInBoundsValidator]],
+            yValue: ['', [Validators.required, Validators.max(3), Validators.min(-3),
+                Validators.pattern(/^(-?\d+)(\.\d+)?$/)]],
             rValue: ['', [Validators.required]]
         });
-    }
-
-    // custom validator
-    yInBoundsValidator(formControl: FormControl): { [s: string]: boolean } {
-        const yValue = parseFloat(formControl.value);
-        if (formControl.value === '' ||
-            !isNaN(yValue) && yValue <= 3 && yValue >= -3 && /^(-?\d+)(\.\d+)?$/.test(formControl.value)) {
-            return null;
-        }
-        return {'yOutOfBounds': true};
     }
 
     hasFormErrors(): boolean {
