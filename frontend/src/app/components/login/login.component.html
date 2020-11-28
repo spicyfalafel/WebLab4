@@ -32,6 +32,13 @@
 
             <button pButton label="Sign in" [disabled]="hasFormErrors()" (click)="onSingInClick()"
                     class="p-button-help font-weight-bold text-dark m-2 w-50"></button>
+
+            <button pButton label="Create account" routerLink="/register"
+                    class="p-button-help font-weight-bold text-dark m-2 w-50"></button>
+
+            <div class="p-message-error text-danger h5 mt-2" *ngIf="isFailedAuth">
+                <span>Username or password is incorrect</span>
+            </div>
         </form>
     </div>
 </div>

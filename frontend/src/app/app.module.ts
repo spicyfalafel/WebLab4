@@ -14,12 +14,15 @@ import {HttpClientModule} from '@angular/common/http';
 import {CheckPointComponent} from './components/check-point/check-point.component';
 import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent} from './components/register/register.component';
+import {PointGuard} from './guard/PointGuard';
+import {SidebarModule} from 'primeng/sidebar';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 const appRoutes: Routes = [
-    {path: '', component: HomeComponent},
-    {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent},
-    {path: '**', component: LoginComponent}
+    {path: 'home', component: HomeComponent, canActivate: [PointGuard]},
+    {path: 'login', component: LoginComponent, canActivate: [PointGuard]},
+    {path: 'register', component: RegisterComponent, canActivate: [PointGuard]},
+    {path: '**', redirectTo: 'login'}
 ];
 
 @NgModule({
@@ -41,7 +44,9 @@ const appRoutes: Routes = [
         ButtonModule,
         ReactiveFormsModule,
         TableModule,
-        HttpClientModule
+        HttpClientModule,
+        SidebarModule,
+        BrowserAnimationsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

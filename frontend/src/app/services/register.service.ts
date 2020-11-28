@@ -8,14 +8,12 @@ import {Observable} from 'rxjs';
 })
 export class RegisterService {
 
-    private URL: string = '';
+    private URL: string = 'http://localhost:8080/api/users/';
 
     constructor(private httpClient: HttpClient) {
     }
 
     register(user: User): Observable<any> {
-        // todo post request and return something
-        // redirect to login page or log in automatically?
-        return null;
+        return this.httpClient.post(this.URL + 'register', JSON.stringify(user));
     }
 }

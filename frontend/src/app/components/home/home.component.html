@@ -1,2 +1,13 @@
+<p-sidebar [(visible)]="isVisibleSideBar" position="left" styleClass="p-sidebar-sm">
+    <div class="text-center mx-5 my-3">
+        <i class="pi pi-user" style="font-size: 2em"></i>
+        <div class="m-2">Current user:</div>
+        <div class="m-2">{{currentUser.username}}</div>
+        <button pButton (click)="onLogOutClick()" label="Log out"></button>
+    </div>
+</p-sidebar>
 <app-check-point></app-check-point>
+<div class="text-center">
+    <button pButton (click)="isVisibleSideBar = true" label="Open profile"></button>
+</div>
 <app-history></app-history>

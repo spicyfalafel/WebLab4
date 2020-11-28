@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 @Injectable({providedIn: 'root'})
 export class PointsService {
 
-    private URL = '';
+    private URL = 'http://localhost:8080/api/points/';
     private TEST_URL='assets/points.json';
 
     constructor(private httpClient: HttpClient) {

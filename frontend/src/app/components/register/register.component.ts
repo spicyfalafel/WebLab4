@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {User} from '../../models/User';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {RegisterService} from '../../services/register.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-register',
@@ -12,9 +13,11 @@ export class RegisterComponent implements OnInit {
     userToRegister: User = new User(0, '', '');
     repeatedPassword: string;
     registerForm: FormGroup;
+    isUsernameExists: boolean = false;
 
     constructor(private formBuilder: FormBuilder,
-                private registerService: RegisterService) {
+                private registerService: RegisterService,
+                private router: Router) {
     }
 
     ngOnInit(): void {
@@ -30,7 +33,7 @@ export class RegisterComponent implements OnInit {
 
     // match passwords
     // custom validators has many bugs(
-    repeatedPasswordMatch(): boolean{
+    repeatedPasswordMatch(): boolean {
         return this.userToRegister.password !== this.repeatedPassword;
     }
 
@@ -44,6 +47,12 @@ export class RegisterComponent implements OnInit {
     }
 
     onSignUpClick(): void {
-        // todo send user
+        this.registerService.register(this.userToRegister).subscribe(data => {
+                this.router.navigate(['/login']);
+            }, error => {
+                // if username taken
+                this.isUsernameExists = true;
+            }
+        );
     }
 }
