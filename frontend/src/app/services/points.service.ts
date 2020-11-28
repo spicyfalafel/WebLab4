@@ -17,7 +17,11 @@ export class PointsService {
     }
 
     addPoint(point: Point): void {
-        this.httpClient.post(JSON.stringify(point), this.URL);
+        this.httpClient.post(JSON.stringify(point), this.URL).subscribe();
+    }
+
+    removeAllPoints(): void {
+        
     }
 }
 

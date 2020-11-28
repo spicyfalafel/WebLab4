@@ -1,9 +1,8 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {PointsService} from '../../services/points.service';
 import {DrawService} from '../../services/draw.service';
 import {Point} from '../../models/Point';
-import {User} from '../../models/User';
 
 @Component({
     selector: 'app-check-point',
@@ -13,9 +12,6 @@ export class CheckPointComponent implements OnInit, AfterViewInit {
 
     @ViewChild('plot', {static: false})
     plot: ElementRef;
-
-    isVisibleSideBar: boolean = false;
-    currentUser: User = JSON.parse(localStorage.getItem('currentUser'));
 
     x: string;
     y: string;
@@ -79,7 +75,7 @@ export class CheckPointComponent implements OnInit, AfterViewInit {
     }
 
     onClearFormClick(): void {
-
+        this.dataForm.reset()
     }
 
     onClearTableClick(): void {

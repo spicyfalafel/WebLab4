@@ -6,7 +6,8 @@ import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-register',
-    templateUrl: './register.component.html'
+    templateUrl: './register.component.html',
+    styleUrls: ['../common/shared.style.css']
 })
 export class RegisterComponent implements OnInit {
 
@@ -23,10 +24,10 @@ export class RegisterComponent implements OnInit {
     ngOnInit(): void {
         this.registerForm = this.formBuilder.group({
             username: ['', [Validators.required, Validators.maxLength(20),
-                Validators.minLength(4), Validators.pattern(/[A-Za-z0-9_]{4,20}/)]],
+                Validators.minLength(4), Validators.pattern(/^[A-Za-z0-9_]{4,20}$/)]],
             password: ['', [Validators.required, Validators.maxLength(20),
                 Validators.minLength(4), Validators.pattern(/[a-z]+/),
-                Validators.pattern(/[A-Z]+/), Validators.pattern(/\d+/), Validators.pattern(/[A-Za-z0-9_]{4,20}/)]],
+                Validators.pattern(/[A-Z]+/), Validators.pattern(/\d+/), Validators.pattern(/^[A-Za-z0-9_]{4,20}$/)]],
             repeatedPassword: ['']
         });
     }
