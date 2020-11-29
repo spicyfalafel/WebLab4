@@ -2,9 +2,7 @@ package ru.itmo.angry.beavers.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Table(name = "points")
@@ -13,7 +11,11 @@ import javax.persistence.Table;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
+@NoArgsConstructor
 public class Point {
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @SequenceGenerator(name="point_generator",
+            sequenceName = "point_seq", allocationSize=50)
     private Long id;
 
     @Column(nullable = false)

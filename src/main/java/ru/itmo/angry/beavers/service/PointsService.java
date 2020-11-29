@@ -11,4 +11,5 @@ public interface PointsService {
     Point get(Long id);
     //void update(Point point);
     void delete(Long id);
+    List<Point> getAllPointsForUser(Long id);
 }

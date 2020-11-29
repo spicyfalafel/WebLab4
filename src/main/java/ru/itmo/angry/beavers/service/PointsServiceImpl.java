@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.itmo.angry.beavers.model.Point;
 import ru.itmo.angry.beavers.repository.PointsRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,6 +21,7 @@ public class PointsServiceImpl implements PointsService{
     @Override
     public void save(Point point) {
         log.info("saved " + point);
+        repository.save(point);
     }
 
     @Override
@@ -38,5 +40,14 @@ public class PointsServiceImpl implements PointsService{
     public void delete(Long id) {
         log.info("delete " + id);
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<Point> getAllPointsForUser(Long id) {
+        List<Point> res = new ArrayList<>();
+        repository.findAll().stream()
+                .filter(i -> i.getId().equals(id)).findFirst()
+                .ifPresent(res::add);
+        return res;
     }
 }
