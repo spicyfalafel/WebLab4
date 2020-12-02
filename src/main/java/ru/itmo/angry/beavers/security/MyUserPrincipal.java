@@ -1,10 +1,13 @@
 package ru.itmo.angry.beavers.security;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.itmo.angry.beavers.model.User;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MyUserPrincipal implements UserDetails {
 
@@ -14,9 +17,12 @@ public class MyUserPrincipal implements UserDetails {
         this.user = user;
     }
 
+    // cannot return null
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+        grantedAuthorities.add(new SimpleGrantedAuthority("user"));
+        return grantedAuthorities;
     }
 
     @Override
@@ -29,23 +35,28 @@ public class MyUserPrincipal implements UserDetails {
         return user.getLogin();
     }
 
+    // false = user's account is expired
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
+    // false = user is locked
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
+
+    // false = expired credentials
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
+    // false = used is disabled and cannot be authenticated
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
