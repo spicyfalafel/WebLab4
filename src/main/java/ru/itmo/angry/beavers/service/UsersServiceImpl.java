@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itmo.angry.beavers.model.User;
-import ru.itmo.angry.beavers.repository.UsersRepository;
+import ru.itmo.angry.beavers.repository.UserRepository;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class UsersServiceImpl implements UsersService {
 
     @Autowired
-    private UsersRepository repository;
+    private UserRepository repository;
 
 
     @Override

@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.itmo.angry.beavers.model.Graph;
 import ru.itmo.angry.beavers.model.Point;
 import ru.itmo.angry.beavers.service.PointsService;
 import javax.validation.Valid;
@@ -60,6 +61,8 @@ public class PointsRestController {
         if(point == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        Graph graph = new Graph();
+        point.setInArea(graph.isInArea(point));
         this.pointsService.save(point);
         return new ResponseEntity<>(point, headers, HttpStatus.CREATED);
     }

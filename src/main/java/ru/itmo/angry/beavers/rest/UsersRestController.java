@@ -98,6 +98,9 @@ public class UsersRestController {
         if(user == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        if(usersService.findByLogin(user.getLogin()) !=null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         this.usersService.save(user);
         return new ResponseEntity<>(user, headers, HttpStatus.CREATED);
     }
@@ -115,4 +118,5 @@ public class UsersRestController {
         this.pointsService.save(point);
         return new ResponseEntity<>(point, headers, HttpStatus.CREATED);
     }
+
 }

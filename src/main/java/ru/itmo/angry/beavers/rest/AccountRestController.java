@@ -1,0 +1,36 @@
+package ru.itmo.angry.beavers.rest;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
+import ru.itmo.angry.beavers.model.User;
+import ru.itmo.angry.beavers.service.UsersServiceImpl;
+
+import javax.validation.Valid;
+
+@RestController
+@Slf4j
+public class AccountRestController {
+
+    @Autowired
+    private UsersServiceImpl usersService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @PostMapping("/register")
+    public ResponseEntity<User> createUser(@RequestBody @Valid User user) {
+        log.info(user.toString());
+        log.info("login " + user.getLogin());
+        if (usersService.findByLogin(user.getLogin()) != null) {
+            log.error("username already exists " + user.getLogin());
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        log.info("user registered " + user.getLogin());
+        user.setHashPass(passwordEncoder.encode(user.getHashPass()));
+        usersService.save(user);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+}
