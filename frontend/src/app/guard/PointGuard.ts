@@ -1,6 +1,7 @@
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
+import {NetworkUtil} from '../utils/NetworkUtil';
 
 @Injectable({providedIn: 'root'})
 export class PointGuard implements CanActivate {
@@ -9,7 +10,7 @@ export class PointGuard implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-        const isAuth: boolean = localStorage.getItem('currentUser') !== null;
+        const isAuth: boolean = NetworkUtil.checkUserData();
 
         if (!isAuth && state.url.match(/\/(home)$/gi)) {
             this.router.navigate(['/login']);

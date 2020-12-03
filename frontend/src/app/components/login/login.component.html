@@ -10,8 +10,9 @@
                 </span>
                 <div class="p-message-error text-danger h6" *ngIf="fieldErrors('username')">
                     <span *ngIf="fieldErrors('username').required">Username is required</span>
-                    <span *ngIf="fieldErrors('username').minlength || fieldErrors('username').maxlength">
-                        Length of username must be from 4 to 20
+                    <span *ngIf="fieldErrors('username').minlength || fieldErrors('username').maxlength
+                    || fieldErrors('username').pattern">
+                        Length of username must be from 4 to 20. Use only latin letters, numbers and underscore
                     </span>
                 </div>
             </div>
@@ -24,8 +25,9 @@
                 </span>
                 <div class="p-message-error text-danger h6" *ngIf="fieldErrors('password')">
                     <span *ngIf="fieldErrors('password').required">Password is required</span>
-                    <span *ngIf="fieldErrors('password').minlength || fieldErrors('password').maxlength">
-                        Length of password must be from 4 to 20
+                    <span *ngIf="fieldErrors('password').minlength || fieldErrors('password').maxlength
+                    || fieldErrors('password')">
+                        Length of password must be from 4 to 20. Use only latin letters, numbers and underscore
                     </span>
                 </div>
             </div>

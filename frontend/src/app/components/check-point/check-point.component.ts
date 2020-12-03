@@ -14,6 +14,7 @@ import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/for
 import {PointsService} from '../../services/points.service';
 import {DrawService} from '../../services/draw.service';
 import {Point} from '../../models/Point';
+import {NetworkUtil} from '../../utils/NetworkUtil';
 
 @Component({
     selector: 'app-check-point',
@@ -55,16 +56,12 @@ export class CheckPointComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     onSubmitClick(): void {
-        console.log('x = ' + this.x);
-        console.log('y = ' + this.y);
-        console.log('r = ' + this.r);
-
         const pointToSend: Point = new Point(0, parseFloat(this.x), parseFloat(this.y), parseFloat(this.r), false, new Date());
         this.pointsService.addPoint(pointToSend).subscribe((data: Response) => {
             this.onSendNewPoint.emit(true);
-        }, error => console.log('error in onSubmitClick'));
+        }, error => NetworkUtil.authFailed());
 
-        // send here
+
         // todo date format on the server side!!!
     }
 
@@ -89,14 +86,17 @@ export class CheckPointComponent implements OnInit, OnChanges, AfterViewInit {
             const yValue: number = this.drawService.fromSvgToRY(y, rValue);
 
             const pointToSend: Point = new Point(0, xValue, yValue, rValue, false, new Date());
+            // error if localStorage data isn't valid
             this.pointsService.addPoint(pointToSend).subscribe((data: Response) => {
                 this.onSendNewPoint.emit(true);
-            }, error => console.log('error in onPlotClick'));
+            }, error => NetworkUtil.authFailed());
         }
     }
 
     onClearFormClick(): void {
         this.dataForm.reset();
+        // because model saves r and it's bad for graphics
+        this.r = undefined;
     }
 
     onClearTableClick(): void {
