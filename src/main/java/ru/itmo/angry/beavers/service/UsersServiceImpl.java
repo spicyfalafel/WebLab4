@@ -7,6 +7,7 @@ import ru.itmo.angry.beavers.model.User;
 import ru.itmo.angry.beavers.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -15,6 +16,12 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     private UserRepository repository;
 
+
+    @Override
+    public Optional<User> findById(Long id) {
+        log.info("find by id " + id);
+        return repository.findById(id);
+    }
 
     @Override
     public User findByLogin(String login) {

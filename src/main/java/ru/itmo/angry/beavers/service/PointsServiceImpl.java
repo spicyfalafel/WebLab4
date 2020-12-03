@@ -15,39 +15,38 @@ import java.util.List;
 public class PointsServiceImpl implements PointsService{
 
     @Autowired
-    private PointsRepository repository;
+    private PointsRepository pointsRepository;
 
 
     @Override
     public void save(Point point) {
         log.info("saved " + point);
-        repository.save(point);
+        pointsRepository.save(point);
     }
 
     @Override
     public List<Point> getAll() {
         log.info("getAll()");
-        return repository.findAll();
+        return pointsRepository.findAll();
     }
 
     @Override
     public Point get(Long id) {
         log.info("get " + id);
-        return repository.getOne(id);
+        return pointsRepository.getOne(id);
     }
 
     @Override
     public void delete(Long id) {
         log.info("delete " + id);
-        repository.deleteById(id);
+        pointsRepository.deleteById(id);
     }
 
     @Override
     public List<Point> getAllPointsForUser(Long id) {
         List<Point> res = new ArrayList<>();
-        repository.findAll().stream()
-                .filter(i -> i.getId().equals(id)).findFirst()
-                .ifPresent(res::add);
+        pointsRepository.findAll().stream()
+                .filter(point -> point.getId().equals(id)).forEach(res::add);
         return res;
     }
 }

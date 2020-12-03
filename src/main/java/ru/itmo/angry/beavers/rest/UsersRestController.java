@@ -1,6 +1,7 @@
 package ru.itmo.angry.beavers.rest;
 
 import com.monitorjbl.json.JsonView;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,11 +14,13 @@ import ru.itmo.angry.beavers.service.UsersService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 import static com.monitorjbl.json.Match.match;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/users/")
 public class UsersRestController {
@@ -35,7 +38,7 @@ public class UsersRestController {
         }
         List<Point> points = pointsService.getAllPointsForUser(id);
         if(points.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(points, HttpStatus.OK);
     }
@@ -108,7 +111,6 @@ public class UsersRestController {
 
     @PostMapping("{userId}/points/")
     public ResponseEntity<Point> savePoint(@RequestBody @Valid Point point, @PathVariable Long userId){
-        HttpHeaders headers = new HttpHeaders();
         if(userId == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -116,7 +118,17 @@ public class UsersRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         this.pointsService.save(point);
-        return new ResponseEntity<>(point, headers, HttpStatus.CREATED);
+        Optional<User> user = this.usersService.findById(userId);
+        if(!user.isPresent()){
+            log.error("user not found");
+        }
+        user.ifPresent(u -> {
+            log.info("adding to user " + user.get().getId() + " point " + point);
+            u.addPoint(point);
+            usersService.update(u);
+        });
+
+        return new ResponseEntity<>(point, HttpStatus.CREATED);
     }
 
 }

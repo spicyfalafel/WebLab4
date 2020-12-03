@@ -30,4 +30,8 @@ public class User{
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Point> points;
+
+    public void addPoint(Point point){
+        points.add(point);
+    }
 }
