@@ -20,13 +20,15 @@ export class DrawService {
         const rValue = this.getRValue(rFromCheckComponent);
         const color: string = this.getColorByResult(this.checkResultService.getResult(point.x, point.y, rValue));
         plot.nativeElement.innerHTML +=
-            `<circle class="point" r="4" cx="${this.fromTableToSvgX(point.x, rValue)}" 
+            `<circle class="point" r="4" cx="${this.fromTableToSvgX(point.x, rValue)}"
              cy="${this.fromTableToSvgY(point.y, rValue)}" fill="${color}"></circle>`;
     }
 
     clearPlot(plot: ElementRef) {
-        const points = plot.nativeElement.querySelectorAll('.point');
-        points.forEach(point => this.renderer.removeChild(plot.nativeElement, point));
+        plot.nativeElement.innerHTML = plot.nativeElement.innerHTML.replace(/<circle class="point".*><\/circle>/g, "");
+        // but it worked two weeks ago...
+        // const points = plot.nativeElement.querySelectorAll('.point');
+        // points.forEach(point => this.renderer.removeChild(plot.nativeElement, point));
     }
 
     getRValue(rFromCheckComponent: string): number {

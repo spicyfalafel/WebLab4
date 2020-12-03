@@ -1,4 +1,15 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewChild
+} from '@angular/core';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {PointsService} from '../../services/points.service';
 import {DrawService} from '../../services/draw.service';
@@ -8,10 +19,11 @@ import {Point} from '../../models/Point';
     selector: 'app-check-point',
     templateUrl: './check-point.component.html'
 })
-export class CheckPointComponent implements OnInit, AfterViewInit {
+export class CheckPointComponent implements OnInit, OnChanges, AfterViewInit {
 
-    @ViewChild('plot', {static: false})
-    plot: ElementRef;
+    @ViewChild('plot', {static: false}) plot: ElementRef;
+    @Input() points: Point[];
+    @Output() onSendNewPoint: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     x: string;
     y: string;
@@ -48,6 +60,8 @@ export class CheckPointComponent implements OnInit, AfterViewInit {
         console.log('r = ' + this.r);
 
         // send here
+        // todo date format on the server side!!!
+        this.onSendNewPoint.emit(true);
     }
 
     onRRadioClick(): void {
@@ -62,24 +76,30 @@ export class CheckPointComponent implements OnInit, AfterViewInit {
 
     onPlotClick(event: MouseEvent): void {
         const offset = this.plot.nativeElement.getBoundingClientRect();
-        const x = event.pageX - offset.left;
-        const y = event.pageY - offset.top;
+        const x: number = event.pageX - offset.left;
+        const y: number = event.pageY - offset.top;
 
         if (this.checkRSelected()) {
-            const rValue = this.drawService.getRValue(this.r);
-            const xValue = this.drawService.fromSvgToRX(x, rValue);
-            const yValue = this.drawService.fromSvgToRY(y, rValue);
+            const rValue: number = this.drawService.getRValue(this.r);
+            const xValue: number = this.drawService.fromSvgToRX(x, rValue);
+            const yValue: number = this.drawService.fromSvgToRY(y, rValue);
 
             // send here
+
+            this.onSendNewPoint.emit(true);
         }
     }
 
     onClearFormClick(): void {
-        this.dataForm.reset()
+        this.dataForm.reset();
     }
 
     onClearTableClick(): void {
 
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        this.onRRadioClick();
     }
 
     ngAfterViewInit(): void {
@@ -87,10 +107,8 @@ export class CheckPointComponent implements OnInit, AfterViewInit {
     }
 
     drawAllPoints(): void {
-        this.pointsService
-            .getAllPoints()
-            .subscribe((data: Point[]) => data.forEach(point =>
-                this.drawService.drawPoint(point, this.plot, this.r)));
+        this.points.forEach(point =>
+            this.drawService.drawPoint(point, this.plot, this.r));
     }
 }
 
