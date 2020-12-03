@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/for
 import {LoginService} from '../../services/login.service';
 import {User} from '../../models/User';
 import {Router} from '@angular/router';
+import {NetworkUtil} from '../../utils/NetworkUtil';
 
 @Component({
     selector: 'app-login',
@@ -16,8 +17,7 @@ export class LoginComponent implements OnInit {
     isFailedAuth: boolean = false;
 
     constructor(private formBuilder: FormBuilder,
-                private loginService: LoginService,
-                private router: Router) {
+                private loginService: LoginService) {
     }
 
     ngOnInit(): void {
@@ -41,10 +41,8 @@ export class LoginComponent implements OnInit {
     onSingInClick(): void {
         // todo fix it if need
         this.loginService.logIn(this.userToAuth).subscribe((users: User[]) => {
-            const currentUser: User = users.find(user => user.login === this.userToAuth.login);
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            localStorage.setItem('basic64Credentials', btoa(this.userToAuth.login+':'+this.userToAuth.hashPass));
-            this.router.navigate(['/home']).then(() => window.location.reload());
+                const currentUser: User = users.find(user => user.login === this.userToAuth.login);
+                NetworkUtil.authSuccess(currentUser, this.userToAuth);
                 // const currentUser = response.json()['principal'];
                 // if (currentUser) {
                 //     localStorage.setItem('currentUser', JSON.stringify(currentUser));

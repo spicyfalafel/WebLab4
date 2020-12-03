@@ -8,8 +8,6 @@ import {NetworkUtil} from '../utils/NetworkUtil';
 @Injectable({providedIn: 'root'})
 export class PointsService {
 
-    private URL = 'http://localhost:9000/api/users/';
-    private TEST_URL = 'assets/points.json';
     private currentUser = JSON.parse(localStorage.getItem('currentUser'));
     private httpOptions = {
         headers: new HttpHeaders({
@@ -18,19 +16,18 @@ export class PointsService {
         })
     };
 
-
     constructor(private httpClient: HttpClient) {
     }
 
     getAllPoints(): Observable<any> {
         this.checkAuth();
-        return this.httpClient.get(`${this.URL}${this.currentUser.id}/points/`, this.httpOptions);
+        return this.httpClient.get(`${NetworkUtil.USERS_URL}${this.currentUser.id}/points/`, this.httpOptions);
     }
 
     addPoint(point: Point): Observable<any> {
         this.checkAuth();
         return this.httpClient
-            .post(`${this.URL}${this.currentUser.id}/points/`, JSON.stringify(point), this.httpOptions);
+            .post(`${NetworkUtil.USERS_URL}${this.currentUser.id}/points/`, JSON.stringify(point), this.httpOptions);
     }
 
     removeAllPoints(): void {

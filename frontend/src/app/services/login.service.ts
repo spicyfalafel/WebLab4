@@ -2,11 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {User} from '../models/User';
 import {Observable} from 'rxjs';
+import {NetworkUtil} from '../utils/NetworkUtil';
 
 @Injectable({providedIn: 'root'})
 export class LoginService {
-
-    private URL = 'http://localhost:9000/api/users/';
 
     constructor(private httpClient: HttpClient) {
     }
@@ -18,7 +17,7 @@ export class LoginService {
                 'Authorization': 'Basic ' + base64Credentials
             })
         };
-        return this.httpClient.get(this.URL, httpOptions);
+        return this.httpClient.get(NetworkUtil.USERS_URL, httpOptions);
     }
 
     logOut(): void {
