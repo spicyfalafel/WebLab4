@@ -1,5 +1,6 @@
 package ru.itmo.angry.beavers.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,8 +8,8 @@ import javax.persistence.*;
 
 @Table(name = "points")
 @Entity
-@Data
-@ToString
+@Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,6 +35,13 @@ Point {
     @Column(nullable = false)
     private String queryTime;
 
+    @JsonIgnore
+    @JoinColumn()
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
+
+    @Override
+    public String toString() {
+        return "{p" + id + " of user " + user.getLogin() + "}";
+    }
 }

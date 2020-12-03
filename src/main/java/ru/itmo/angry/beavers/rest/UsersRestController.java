@@ -31,18 +31,6 @@ public class UsersRestController {
     @Autowired
     UsersService usersService;
 
-    @GetMapping(value = "{id}/points/")
-    public ResponseEntity<List<Point>> getPointsForUser(@PathVariable final Long id) {
-        if(id == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        List<Point> points = pointsService.getAllPointsForUser(id);
-        if(points.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(points, HttpStatus.OK);
-    }
-
     @GetMapping("{id}/points/{pointId}")
     public ResponseEntity<Point> getPointById(@PathVariable("id") Long id,
                                               @PathVariable("pointId")Long pointId){
@@ -117,18 +105,28 @@ public class UsersRestController {
         if(point == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        this.pointsService.save(point);
         Optional<User> user = this.usersService.findById(userId);
-        if(!user.isPresent()){
-            log.error("user not found");
-        }
         user.ifPresent(u -> {
-            log.info("adding to user " + user.get().getId() + " point " + point);
+            point.setUser(u);
             u.addPoint(point);
+            pointsService.save(point);
             usersService.update(u);
+            log.info("adding to user " + user.get().getId() + " point " + point);
         });
 
         return new ResponseEntity<>(point, HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "{id}/points/")
+    public ResponseEntity<List<Point>> getPointsForUser(@PathVariable final Long id) {
+        if(id == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        List<Point> points = pointsService.getAllPointsForUser(id);
+        if(points.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(points, HttpStatus.OK);
     }
 
 }

@@ -43,10 +43,10 @@ public class PointsServiceImpl implements PointsService{
     }
 
     @Override
-    public List<Point> getAllPointsForUser(Long id) {
+    public List<Point> getAllPointsForUser(Long userId) {
         List<Point> res = new ArrayList<>();
         pointsRepository.findAll().stream()
-                .filter(point -> point.getId().equals(id)).forEach(res::add);
+                .filter(point -> point.getUser().getId().equals(userId)).forEach(res::add);
         return res;
     }
 }

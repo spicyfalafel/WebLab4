@@ -50,7 +50,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public void update(User user) {
         log.info("update " + user);
-
+        repository.save(user);
     }
 
     @Override

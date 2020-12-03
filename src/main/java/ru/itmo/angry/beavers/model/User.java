@@ -4,15 +4,18 @@ package ru.itmo.angry.beavers.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "users")
 @Entity
-@Data
-@ToString
+@Getter
+@Setter
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User{
 
@@ -28,10 +31,13 @@ public class User{
     private String hashPass;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Point> points;
 
     public void addPoint(Point point){
+        if (points == null){
+            points = new ArrayList<>();
+        }
         points.add(point);
     }
 }
