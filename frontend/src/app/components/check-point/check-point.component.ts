@@ -59,9 +59,13 @@ export class CheckPointComponent implements OnInit, OnChanges, AfterViewInit {
         console.log('y = ' + this.y);
         console.log('r = ' + this.r);
 
+        const pointToSend: Point = new Point(0, parseFloat(this.x), parseFloat(this.y), parseFloat(this.r), false, new Date());
+        this.pointsService.addPoint(pointToSend).subscribe((data: Response) => {
+            this.onSendNewPoint.emit(true);
+        }, error => console.log('error in onSubmitClick'));
+
         // send here
         // todo date format on the server side!!!
-        this.onSendNewPoint.emit(true);
     }
 
     onRRadioClick(): void {
@@ -84,9 +88,10 @@ export class CheckPointComponent implements OnInit, OnChanges, AfterViewInit {
             const xValue: number = this.drawService.fromSvgToRX(x, rValue);
             const yValue: number = this.drawService.fromSvgToRY(y, rValue);
 
-            // send here
-
-            this.onSendNewPoint.emit(true);
+            const pointToSend: Point = new Point(0, xValue, yValue, rValue, false, new Date());
+            this.pointsService.addPoint(pointToSend).subscribe((data: Response) => {
+                this.onSendNewPoint.emit(true);
+            }, error => console.log('error in onPlotClick'));
         }
     }
 

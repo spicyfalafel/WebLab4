@@ -38,12 +38,16 @@ export class LoginComponent implements OnInit {
 
     onSingInClick(): void {
         // todo fix it if need
-        this.loginService.logIn(this.userToAuth).subscribe((response: Response) => {
-                const currentUser = response.json()['principal'];
-                if (currentUser) {
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                    this.router.navigate(['/home']);
-                }
+        this.loginService.logIn(this.userToAuth).subscribe((users: User[]) => {
+            const currentUser: User = users.find(user => user.login === this.userToAuth.login);
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            localStorage.setItem('basic64Credentials', btoa(this.userToAuth.login+':'+this.userToAuth.hashPass));
+            this.router.navigate(['/home']).then(() => window.location.reload());
+                // const currentUser = response.json()['principal'];
+                // if (currentUser) {
+                //     localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                //     this.router.navigate(['/home']);
+                // }
             }, error => this.isFailedAuth = true
         );
     }

@@ -17,7 +17,7 @@ export class HistoryComponent {
         {field: 'x', header: 'X'},
         {field: 'y', header: 'Y'},
         {field: 'r', header: 'R'},
-        {field: 'result', header: 'Result'},
+        {field: 'inArea', header: 'Result'},
         {field: 'queryTime', header: 'Current time'}
     ];
 }

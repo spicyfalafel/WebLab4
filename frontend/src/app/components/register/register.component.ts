@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
     // match passwords
     // custom validators has many bugs(
     repeatedPasswordMatch(): boolean {
-        return this.userToRegister.password !== this.repeatedPassword;
+        return this.userToRegister.hashPass !== this.repeatedPassword;
     }
 
     hasFormErrors(): boolean {
