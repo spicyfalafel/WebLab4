@@ -40,4 +40,9 @@ public class User{
         }
         points.add(point);
     }
+
+    @Override
+    public String toString() {
+        return "{" + id + ":" + login + "}";
+    }
 }

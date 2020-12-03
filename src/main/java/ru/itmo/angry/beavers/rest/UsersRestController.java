@@ -108,10 +108,8 @@ public class UsersRestController {
         Optional<User> user = this.usersService.findById(userId);
         user.ifPresent(u -> {
             point.setUser(u);
-            u.addPoint(point);
             pointsService.save(point);
-            usersService.update(u);
-            log.info("adding to user " + user.get().getId() + " point " + point);
+            log.info("adding to user " + user.get().toString() + " point " + point);
         });
 
         return new ResponseEntity<>(point, HttpStatus.CREATED);
