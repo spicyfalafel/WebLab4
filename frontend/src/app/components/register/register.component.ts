@@ -3,6 +3,7 @@ import {User} from '../../models/User';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {RegisterService} from '../../services/register.service';
 import {Router} from '@angular/router';
+import {NetworkUtil} from '../../utils/NetworkUtil';
 
 @Component({
     selector: 'app-register',
@@ -17,8 +18,7 @@ export class RegisterComponent implements OnInit {
     isUsernameExists: boolean = false;
 
     constructor(private formBuilder: FormBuilder,
-                private registerService: RegisterService,
-                private router: Router) {
+                private registerService: RegisterService) {
     }
 
     ngOnInit(): void {
@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
     // match passwords
     // custom validators has many bugs(
     repeatedPasswordMatch(): boolean {
-        return this.userToRegister.password !== this.repeatedPassword;
+        return this.userToRegister.hashPass !== this.repeatedPassword;
     }
 
     hasFormErrors(): boolean {
@@ -48,9 +48,10 @@ export class RegisterComponent implements OnInit {
     }
 
     onSignUpClick(): void {
-        this.registerService.register(this.userToRegister).subscribe(data => {
-                this.router.navigate(['/login']);
-            }, error => {
+        this.registerService.register(this.userToRegister).subscribe(
+            // todo fix id=0 on backend
+            (createdUser: User) => NetworkUtil.authSuccess(createdUser, this.userToRegister),
+            error => {
                 // if username taken
                 this.isUsernameExists = true;
             }

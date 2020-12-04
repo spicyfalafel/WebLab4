@@ -5,13 +5,14 @@
             <div class="m-4 p-fluid">
                 <span class="p-float-label m-2">
                     <input id="username" type="text" pInputText name="username" maxlength="20"
-                           formControlName="username" [(ngModel)]="userToAuth.username">
+                           formControlName="username" [(ngModel)]="userToAuth.login">
                     <label for="username">Username</label>
                 </span>
                 <div class="p-message-error text-danger h6" *ngIf="fieldErrors('username')">
                     <span *ngIf="fieldErrors('username').required">Username is required</span>
-                    <span *ngIf="fieldErrors('username').minlength || fieldErrors('username').maxlength">
-                        Length of username must be from 4 to 20
+                    <span *ngIf="fieldErrors('username').minlength || fieldErrors('username').maxlength
+                    || fieldErrors('username').pattern">
+                        Length of username must be from 4 to 20. Use only latin letters, numbers and underscore
                     </span>
                 </div>
             </div>
@@ -19,13 +20,14 @@
             <div class="m-4 p-fluid">
                 <span class="p-float-label m-2">
                     <input id="password" type="password" pInputText name="password" maxlength="20"
-                           formControlName="password" [(ngModel)]="userToAuth.password">
+                           formControlName="password" [(ngModel)]="userToAuth.hashPass">
                     <label for="password">Password</label>
                 </span>
                 <div class="p-message-error text-danger h6" *ngIf="fieldErrors('password')">
                     <span *ngIf="fieldErrors('password').required">Password is required</span>
-                    <span *ngIf="fieldErrors('password').minlength || fieldErrors('password').maxlength">
-                        Length of password must be from 4 to 20
+                    <span *ngIf="fieldErrors('password').minlength || fieldErrors('password').maxlength
+                    || fieldErrors('password')">
+                        Length of password must be from 4 to 20. Use only latin letters, numbers and underscore
                     </span>
                 </div>
             </div>

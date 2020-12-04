@@ -5,7 +5,7 @@
             <div class="m-4 p-fluid">
                 <span class="p-float-label m-2">
                     <input id="username" type="text" pInputText formControlName="username" name="username"
-                           maxlength="20" [(ngModel)]="userToRegister.username">
+                           maxlength="20" [(ngModel)]="userToRegister.login">
                     <label for="username">Username</label>
                 </span>
                 <div class="p-message-error text-danger h6" *ngIf="fieldErrors('username')">
@@ -22,7 +22,7 @@
             <div class="m-4 p-fluid">
                 <span class="p-float-label m-2">
                     <input id="password" type="password" pInputText name="password" maxlength="20"
-                           formControlName="password" [(ngModel)]="userToRegister.password">
+                           formControlName="password" [(ngModel)]="userToRegister.hashPass">
                     <label for="password">Password</label>
                 </span>
                 <div class="p-message-error text-danger h6" *ngIf="fieldErrors('password')">
