@@ -7,12 +7,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.itmo.angry.beavers.model.Graph;
 import ru.itmo.angry.beavers.model.Point;
 import ru.itmo.angry.beavers.model.User;
 import ru.itmo.angry.beavers.service.PointsService;
 import ru.itmo.angry.beavers.service.UsersService;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -107,6 +110,11 @@ public class UsersRestController {
         }
         Optional<User> user = this.usersService.findById(userId);
         user.ifPresent(u -> {
+            Graph graph = new Graph();
+            point.setInArea(graph.isInArea(point));
+            Date now = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
+            point.setQueryTime(format.format(now));
             point.setUser(u);
             pointsService.save(point);
             log.info("adding to user " + user.get().toString() + " point " + point);
