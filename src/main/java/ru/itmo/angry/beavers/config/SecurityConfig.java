@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ru.itmo.angry.beavers.security.MyUserDetailsService;
@@ -48,10 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                     // for every non-guest url require authorization
                     .anyRequest()
                     .authenticated()
-                .and()
-                    .logout()
-                    .permitAll()
-                /*.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))*/
                 .and()
                 // enabling the basic authentication
                     .httpBasic();
