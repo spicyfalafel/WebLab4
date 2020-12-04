@@ -36,4 +36,12 @@ public class AccountRestController {
         usersService.save(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody @Valid User user){
+        User u = usersService.findByLogin(user.getLogin());
+        if (u==null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(u, HttpStatus.OK);
+    }
 }
