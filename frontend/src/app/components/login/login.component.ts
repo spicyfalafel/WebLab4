@@ -40,8 +40,7 @@ export class LoginComponent implements OnInit {
 
     onSingInClick(): void {
         // todo fix it if need
-        this.loginService.logIn(this.userToAuth).subscribe((users: User[]) => {
-                const currentUser: User = users.find(user => user.login === this.userToAuth.login);
+        this.loginService.logIn(this.userToAuth).subscribe((currentUser: User) => {
                 NetworkUtil.authSuccess(currentUser, this.userToAuth);
                 // const currentUser = response.json()['principal'];
                 // if (currentUser) {

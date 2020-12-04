@@ -17,7 +17,7 @@ export class LoginService {
                 'Authorization': 'Basic ' + base64Credentials
             })
         };
-        return this.httpClient.get(NetworkUtil.USERS_URL, httpOptions);
+        return this.httpClient.post(NetworkUtil.LOGIN_URL, {login: user.login},  httpOptions);
     }
 
     logOut(): void {

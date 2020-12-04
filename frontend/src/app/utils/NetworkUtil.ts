@@ -4,6 +4,7 @@ export class NetworkUtil {
 
     static REGISTER_URL: string = 'http://localhost:9000/register';
     static USERS_URL: string = 'http://localhost:9000/api/users/';
+    static LOGIN_URL: string = 'http://localhost:9000/login';
 
     static clearStorage(): void {
         localStorage.clear();
