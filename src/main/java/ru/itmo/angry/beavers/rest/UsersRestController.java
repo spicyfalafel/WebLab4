@@ -129,9 +129,9 @@ public class UsersRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         List<Point> points = pointsService.getAllPointsForUser(id);
-        if(points.isEmpty()){
+        /*if(points.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+        }*/
         return new ResponseEntity<>(points, HttpStatus.OK);
     }
 

@@ -30,6 +30,9 @@ public class AccountRestController {
         }
         log.info("user registered " + user.getLogin());
         user.setHashPass(passwordEncoder.encode(user.getHashPass()));
+        if (user.getId() == 0){
+            user.setId(null); // ahahah
+        }
         usersService.save(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
