@@ -26,14 +26,10 @@ export class DrawService {
 
     clearPlot(plot: ElementRef) {
         plot.nativeElement.innerHTML = plot.nativeElement.innerHTML.replace(/<circle class="point".*><\/circle>/g, "");
-        // but it worked two weeks ago...
-        // const points = plot.nativeElement.querySelectorAll('.point');
-        // points.forEach(point => this.renderer.removeChild(plot.nativeElement, point));
     }
 
     getRValue(rFromCheckComponent: string): number {
         let rValue = parseFloat(rFromCheckComponent);
-        // fixme if after sending point r will reset
         if (isNaN(rValue)) {
             rValue = this.DEFAULT_R_VALUE;
         }

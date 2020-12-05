@@ -60,9 +60,6 @@ export class CheckPointComponent implements OnInit, OnChanges, AfterViewInit {
         this.pointsService.addPoint(pointToSend).subscribe((data: Response) => {
             this.onSendNewPoint.emit(true);
         }, error => NetworkUtil.authFailed());
-
-
-        // todo date format on the server side!!!
     }
 
     onRRadioClick(): void {
@@ -97,10 +94,6 @@ export class CheckPointComponent implements OnInit, OnChanges, AfterViewInit {
         this.dataForm.reset();
         // because model saves r and it's bad for graphics
         this.r = undefined;
-    }
-
-    onClearTableClick(): void {
-
     }
 
     ngOnChanges(changes: SimpleChanges): void {
