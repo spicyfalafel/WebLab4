@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Point} from '../models/Point';
 import {Observable} from 'rxjs';
-import {Router} from '@angular/router';
 import {NetworkUtil} from '../utils/NetworkUtil';
 
 @Injectable({providedIn: 'root'})
@@ -28,10 +27,6 @@ export class PointsService {
         this.checkAuth();
         return this.httpClient
             .post(`${NetworkUtil.USERS_URL}${this.currentUser.id}/points/`, JSON.stringify(point), this.httpOptions);
-    }
-
-    removeAllPoints(): void {
-
     }
 
     private checkAuth(): void {

@@ -18,7 +18,6 @@ export class PointGuard implements CanActivate {
         }
 
         if (isAuth && state.url.match(/\/(login|register)$/gi)) {
-            // todo something like profile?
             this.router.navigate(['/home']);
             return false;
         }
