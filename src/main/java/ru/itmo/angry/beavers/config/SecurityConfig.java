@@ -37,13 +37,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
+                    // permit OPTIONS requests
+                    .cors().and()
                     // disabling the CSRF - Cross Site Request Forgery
                     .csrf().disable()
                     // turn on authorization
                     .authorizeRequests()
                     // urls for every guest, others not permitted
                     .antMatchers("/register").permitAll()
-                    .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     // for every non-guest url require authorization
                     .anyRequest()
                     .authenticated()
