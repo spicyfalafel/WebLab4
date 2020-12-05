@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.5.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>ru.itmo.angry.beavers</groupId>
     <artifactId>weblab4</artifactId>
@@ -17,34 +17,47 @@
     <properties>
         <java.version>1.8</java.version>
         <spring.version>2.2.2.RELEASE</spring.version>
+        <deploy.jboss.host>localhost</deploy.jboss.host>
+        <deploy.jboss.port>4533</deploy.jboss.port>
+        <deploy.jboss.username>root</deploy.jboss.username>
+        <deploy.jboss.password>root</deploy.jboss.password>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-rest</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
             <version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                    <artifactId>tomcat-embed-websocket</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>tomcat-embed-el</artifactId>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>tomcat-embed-core</artifactId>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>tomcat-embed-websocket</artifactId>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
+<!--
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-            <version>${spring.version}</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
+-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -59,12 +72,47 @@
                     <groupId>org.apache.tomcat.embed</groupId>
                     <artifactId>tomcat-embed-websocket</artifactId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>tomcat-embed-el</artifactId>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>tomcat-embed-core</artifactId>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>tomcat-embed-websocket</artifactId>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+            <version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                    <artifactId>tomcat-embed-websocket</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>tomcat-embed-el</artifactId>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>tomcat-embed-core</artifactId>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>tomcat-embed-websocket</artifactId>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- ignore field -->
@@ -77,20 +125,25 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.16</version>
             <optional>true</optional>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc8 -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.14</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc8 -->
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc8</artifactId>
-            <version>19.8.0.0</version>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.4</version>
         </dependency>
-
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
 
         <!-- maybe later -->
         <!--<dependency>
@@ -102,7 +155,7 @@
 
     <build>
         <plugins>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
@@ -112,8 +165,27 @@
                         </manifestEntries>
                     </archive>
                 </configuration>
+            </plugin>-->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>2.0.2.Final</version>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <filename>${project.build.finalName}.war</filename>
+                    <hostname>${deploy.jboss.host}</hostname>
+                    <port>${deploy.jboss.port}</port>
+                    <username>${deploy.jboss.username}</username>
+                    <password>${deploy.jboss.password}</password>
+                </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>
